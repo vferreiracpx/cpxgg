@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Marcar Reunião</title>
+  <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #10131b;
+      --card: #181d27;
+      --accent: #4f8cff;
+      --accent2: #ffd54f;
+      --label: #b8b8b8;
+      --input: #232a3a;
+      --shadow: 0 4px 24px 0 rgba(0,0,0,0.13);
+      --radius: 16px;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg);
+      color: #fffde7;
+      font-size: 16px;
+      min-height: 100vh;
+    }
+    nav {
+      background: #1f1f1f;
+      padding: 12px 0;
+      text-align: center;
+      width: 100vw;
+      border-radius: 0 0 14px 14px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px #1118;
+      font-size: 1.08em;
+    }
+    nav a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 13px;
+      border-radius: 7px;
+      padding: 6px 11px;
+      transition: background .18s, color .18s;
+      display: inline-block;
+    }
+    nav a:hover {
+      background: var(--accent);
+      color: #fffde7;
+    }
+    main {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 760px;
+      max-width: 98vw;
+      margin: 18px 0 30px 0;
+      display: flex;
+      gap: 38px;
+      align-items: flex-start;
+      padding: 30px 34px 28px 34px;
+    }
+    @media (max-width: 950px) {
+      .card { flex-direction: column; gap: 22px; width: 99vw; padding:16px 2vw;}
+      .painel-form, .painel-output { max-width:100% !important; }
+    }
+    .painel-form {
+      flex: 1 1 0;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7em;
+    }
+    .painel-form h1 {
+      color: var(--accent);
+      font-size: 1.5em;
+      font-weight: 700;
+      margin-bottom: 7px;
+      margin-top: 0;
+      letter-spacing: -0.5px;
+      text-align: left;
+    }
+    .painel-form .desc {
+      color: var(--label);
+      margin-bottom: 18px;
+      font-size: 1.04em;
+      padding-left: 2px;
+    }
+    label {
+      font-weight: 700;
+      color: var(--label);
+      margin-bottom: 3px;
+      margin-top: 11px;
+      display: block;
+      font-size: 1em;
+    }
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    select {
+      width: 60px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background-color: var(--input);
+      color: #fffde7;
+      font-size: 1rem;
+    }
+    input[type="text"], input[type="date"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background-color: var(--input);
+      color: #fffde7;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    .painel-form button {
+      margin-top: 19px;
+      width: 100%;
+      padding: 13px 0;
+      font-size: 1.13em;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, var(--accent) 60%, var(--accent2) 100%);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.25s;
+      box-shadow: 0 2px 12px 0 #191e2e55;
+    }
+    .painel-form button:hover {
+      background: linear-gradient(90deg, var(--accent2) 15%, var(--accent) 100%);
+      color: #1a1a1a;
+    }
+    .painel-output {
+      flex: 1.2 1 0;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+    .painel-output h2 {
+      color: var(--accent2);
+      font-size: 1.12em;
+      margin-bottom: 9px;
+      margin-top: 0;
+      font-weight: 800;
+      text-shadow: 0 1px 0 #1113;
+    }
+    .output-label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #ffd54f;
+      font-size: 1.08em;
+      letter-spacing: .5px;
+    }
+    .output-content {
+      background: #171a22;
+      color: #fffde7;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      border-radius: 7px;
+      padding: 17px 15px;
+      font-size: 1.09em;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 0;
+      min-height: 70px;
+      max-height: none;
+      overflow: visible;
+    }
+    .copy-btn {
+      width: 100%;
+      margin: 8px 0 0 0;
+      padding: 11px 0;
+      font-size: 1em;
+      border-radius: 7px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background .17s;
+    }
+    .copy-btn:hover {
+      background: var(--accent2);
+      color: #222;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 35px;
+      font-size: 0.95em;
+      color: #aaa;
+      width: 100vw;
+    }
+    .footer img {
+      margin-top: 10px;
+      width: 120px;
+    }
+    a {
+      color: #5dade2;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+		<a href="/cpxxp/index.html">🏠 Início</a>
+        <a href="/cpxxp/entrevista/index.html">🎤 Entrevista</a>
+        <a href="/cpxxp/punicoes_trabalho/index.html">🛠️ Punições Trabalho</a>
+        <a href="/cpxxp/punicoes_nome/index.html">❌ Punições Nome</a>
+        <a href="/cpxxp/verificar_perfil/index.html">🔍 Verificar Perfil</a>
+        <a href="/cpxxp/reuniao_nome/index.html">📅 Marcar Troca de Nome</a>
+        <a href="/cpxxp/modelos_suporte/index.html">🔄 Modelos Suporte</a>
+<main>
+  <div class="card">
+    <form class="painel-form" autocomplete="off" onsubmit="event.preventDefault(); gerarMensagem();">
+      <h1>Marcar Reunião</h1>
+      <div class="desc">
+        Gere rapidamente uma mensagem personalizada para convidar alguém à reunião.<br>
+        <span style="color:var(--accent2);font-weight:600;">Preencha os campos</span> ao lado e clique em <b>Gerar Mensagem</b>!
+      </div>
+      <label>Nome do administrador:</label>
+      <div class="row">
+        <select id="tratamento">
+          <option value="o">o</option>
+          <option value="a">a</option>
+        </select>
+        <input type="text" id="nomeStaff" placeholder="Ex: Nome" />
+      </div>
+      <label for="dataInicio">Data de início <span style="color:#ffd54f">(opcional)</span>:</label>
+      <input type="date" id="dataInicio" />
+      <label for="dataFim">Data de fim <span style="color:#ffd54f">(opcional)</span>:</label>
+      <input type="date" id="dataFim" />
+      <button type="submit">Gerar Mensagem</button>
+    </form>
+    <section class="painel-output">
+      <h2>Mensagem Pronta</h2>
+      <div class="output-label">Mensagem de Reunião</div>
+      <div class="output-content" id="resultado"></div>
+      <button class="copy-btn" onclick="copiarMensagem()">Copiar Mensagem</button>
+	  <div>Olá, em qual momento você esta disponivel para uma reunião?</div>
+    </section>
+  </div>
+</main>
+  <div class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky Confuso" />
+    <p>© 2025 - Todos os direitos reservados. Feito com ❤, ajuda de IA e um pouquinho de preguiça por <a href="https://jackymayers.github.io/" target="_blank" style="color:#aaa;">Jacky Mayers</a>!</p>
+  </div>
+  <script>
+    // Função para obter a saudação baseada na hora atual
+    function getSaudacao() {
+      const hora = new Date().getHours();
+      if (hora >= 5 && hora < 12) {
+        return "Bom dia";
+      } else if (hora >= 12 && hora < 18) {
+        return "Boa tarde";
+      } else {
+        return "Boa noite";
+      }
+    }
+
+    function formatarDataParaDDMM(data) {
+      const dia = String(data.getDate()).padStart(2, '0');
+      const mes = String(data.getMonth() + 1).padStart(2, '0');
+      return `${dia}/${mes}`;
+    }
+
+    function gerarMensagem() {
+      const tratamento = document.getElementById('tratamento').value;
+      const nome = document.getElementById('nomeStaff').value.trim() || 'Nome';
+      const dataInicioVal = document.getElementById('dataInicio').value;
+      const dataFimVal = document.getElementById('dataFim').value;
+      
+      const saudacao = getSaudacao(); // Pega a saudação dinâmica (Bom dia, Boa tarde, Boa noite)
+
+      let mensagem = `${saudacao}, você está sendo convidado(a) a participar de uma reunião com a Equipe de Suporte. Procure ${tratamento} ${nome}, para agendar um horário no PRIVADO, `;
+      const hoje = new Date();
+      const amanha = new Date();
+      amanha.setDate(hoje.getDate() + 1);
+
+      if (!dataInicioVal && !dataFimVal) {
+        mensagem += `na data de hoje ou amanhã (${formatarDataParaDDMM(hoje)} ou ${formatarDataParaDDMM(amanha)}).`;
+      } else if (dataInicioVal && dataFimVal) {
+        const inicio = new Date(dataInicioVal + "T00:00:00");
+        const fim = new Date(dataFimVal + "T00:00:00");
+        mensagem += `entre os dias ${formatarDataParaDDMM(inicio)} e ${formatarDataParaDDMM(fim)}.`;
+      } else if (dataInicioVal) {
+        const inicio = new Date(dataInicioVal + "T00:00:00");
+        mensagem += `no dia ${formatarDataParaDDMM(inicio)}.`;
+      } else if (dataFimVal) {
+        const fim = new Date(dataFimVal + "T00:00:00");
+        mensagem += `no dia ${formatarDataParaDDMM(fim)}.`;
+      }
+      
+      mensagem += " Caso não corresponda à esta mensagem, uma punição entrará em vigor.";
+      document.getElementById('resultado').innerText = mensagem;
+    }
+
+    function copiarMensagem() {
+      const texto = document.getElementById('resultado').innerText;
+      if (!texto) { alert('Nada para copiar!'); return; }
+      const temp = document.createElement('textarea');
+      temp.value = texto;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      alert('Mensagem copiada!');
+    }
+  </script>
+</body>
+</html>

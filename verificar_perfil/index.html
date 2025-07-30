@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verificação de Perfil - Discord</title>
+  <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #181818;
+      color: #f9f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    header {
+      background-color: #111;
+      padding: 10px 0;
+      text-align: center;
+      border-bottom: 2px solid #333;
+    }
+    header img {
+      height: 45px;
+    }
+    nav a {
+      color: #f9f9f9;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #4fc3f7;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: #252525;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+    }
+    table {
+      width: 100%;
+      border-spacing: 0 10px;
+    }
+    td {
+      vertical-align: middle;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      background-color: #333;
+      color: #f9f9f9;
+    }
+    .separator {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #888;
+      padding: 0 10px;
+      user-select: none;
+    }
+    button {
+      background-color: #4fc3f7;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      color: #111;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-right: 5px;
+    }
+    button:hover {
+      background-color: #29b6f6;
+    }
+    .output {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      margin-top: 20px;
+      border: 1px solid #333;
+      min-height: 80px;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.85em;
+      color: #aaa;
+      margin-top: 30px;
+      padding-bottom: 20px;
+    }
+    .footer img {
+      margin-top: 10px;
+      width: 100px;
+    }
+    .footer a {
+      color: #f9f9f9;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="https://jackymayers.github.io/cpxxp/">
+      <img src="https://i.postimg.cc/MG7qzW4x/emote.png" alt="Logo" />
+    </a>
+    <nav>
+		<a href="/cpxxp/index.html">🏠 Início</a>
+        <a href="/cpxxp/entrevista/index.html">🎤 Entrevista</a>
+        <a href="/cpxxp/punicoes_trabalho/index.html">🛠️ Punições Trabalho</a>
+        <a href="/cpxxp/punicoes_nome/index.html">❌ Punições Nome</a>
+        <a href="/cpxxp/verificar_perfil/index.html">🔍 Verificar Perfil</a>
+        <a href="/cpxxp/reuniao_nome/index.html">📅 Marcar Troca de Nome</a>
+        <a href="/cpxxp/modelos_suporte/index.html">🔄 Modelos Suporte</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Gerador de Verificação</h1>
+
+    <table id="table-ids">
+      <tr>
+        <td>
+          <input type="text" placeholder="123456789012345678">
+        </td>
+        <td class="separator">|</td>
+        <td>
+          <input type="text" placeholder="Motivo...">
+        </td>
+      </tr>
+    </table>
+    <button onclick="addRow()">+ Adicionar Linha</button>
+    <button onclick="gerarMensagem()">Gerar Resultado</button>
+    <button onclick="copiarResultado()">Copiar</button>
+    <button onclick="limparTudo()">Limpar</button>
+
+    <div class="output" id="resultado"></div>
+  </div>
+
+  <div class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky Confuso" />
+    <p>© 2025 - Todos os direitos reservados. Feito com ❤, IA e café por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a>!</p>
+  </div>
+
+  <script>
+    function addRow() {
+      const table = document.getElementById('table-ids');
+      const row = table.insertRow(-1);
+
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+
+      cell1.innerHTML = `<input type="text" placeholder="123456789012345678">`;
+      cell2.className = "separator";
+      cell2.innerText = "|";
+      cell3.innerHTML = `<input type="text" placeholder="Motivo...">`;
+    }
+
+    function gerarMensagem() {
+      const table = document.getElementById('table-ids');
+      let saida = '';
+
+      for (let i = 0; i < table.rows.length; i++) {
+        const id = table.rows[i].cells[0].querySelector('input').value.trim();
+        const motivo = table.rows[i].cells[2].querySelector('input').value.trim();
+
+        if (id) {
+          if (motivo) {
+            saida += `${id} | <@${id}> - ${motivo}\n`;
+          } else {
+            saida += `${id} | <@${id}>\n`;
+          }
+        }
+      }
+
+      document.getElementById('resultado').innerText = saida.trim();
+    }
+
+    function copiarResultado() {
+      const resultado = document.getElementById('resultado').innerText;
+      navigator.clipboard.writeText(resultado).then(() => {
+        alert("Resultado copiado!");
+      });
+    }
+
+    function limparTudo() {
+      const table = document.getElementById('table-ids');
+
+      while (table.rows.length > 1) {
+        table.deleteRow(-1);
+      }
+
+      table.rows[0].cells[0].querySelector('input').value = '';
+      table.rows[0].cells[2].querySelector('input').value = '';
+
+      document.getElementById('resultado').innerText = '';
+    }
+  </script>
+</body>
+</html>

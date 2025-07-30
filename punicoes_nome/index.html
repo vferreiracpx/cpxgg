@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punição Nome Inadequado</title>
+  <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #10131b;
+      --card: #181d27;
+      --accent: #4f8cff;
+      --accent2: #ffd54f;
+      --danger: #ff4b4b;
+      --text: #fffde7;
+      --label: #b8b8b8;
+      --input: #232a3a;
+      --radius: 16px;
+      --shadow: 0 4px 24px 0 rgba(0,0,0,0.19);
+      --trans: 0.22s cubic-bezier(.4,0,.2,1);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+    nav {
+      background: #1f1f1f;
+      padding: 12px 0 12px 0;
+      text-align: center;
+      width: 100vw;
+      min-width: 320px;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px #1118;
+      font-size: 1.09em;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 13px;
+      font-weight: 600;
+      border-radius: 7px;
+      padding: 6px 11px;
+      transition: background .17s, color .17s;
+      display: inline-block;
+    }
+    nav a:hover {
+      background: var(--accent);
+      color: #fffde7;
+    }
+    main {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px 36px 30px 36px;
+      width: 1050px;
+      max-width: 99vw;
+      margin: 16px 0 28px 0;
+      display: flex;
+      gap: 38px;
+      align-items: flex-start;
+    }
+    @media (max-width: 1050px) {
+      .card { flex-direction: column; width: 99vw; gap: 20px;}
+      .painel-results { width: 100% !important; }
+    }
+    @media (max-width: 700px) {
+      .card { padding: 8px 1vw; }
+      .painel-form, .painel-results { max-width: 100% !important; }
+      .result-content { font-size: 0.96em; padding: 8px 7px; }
+      .result-title { font-size: 1em;}
+    }
+    .painel-form {
+      flex: 1 1 0;
+      min-width: 270px;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7em;
+    }
+    .painel-form h1 {
+      color: var(--accent);
+      font-size: 1.65em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      margin-top: 0;
+      letter-spacing: -0.5px;
+      text-align: left;
+    }
+    .painel-form .desc {
+      color: var(--label);
+      margin-bottom: 19px;
+      font-size: 1.04em;
+      padding-left: 2px;
+    }
+    label {
+      font-weight: 700;
+      color: var(--label);
+      letter-spacing: 0.01em;
+      margin-bottom: 3px;
+      margin-top: 11px;
+      display: block;
+      font-size: 1em;
+    }
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 8px;
+      border: 2px solid #26314b;
+      background: var(--input);
+      color: var(--text);
+      font-size: 1.06em;
+      margin-bottom: 6px;
+      margin-top: 0;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border var(--trans), box-shadow var(--trans);
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px #4f8cff44;
+      background: #242d41;
+    }
+    button {
+      width: 100%;
+      padding: 14px 0;
+      background: linear-gradient(90deg, var(--accent) 40%, var(--accent2) 100%);
+      color: #fff;
+      font-size: 1.12em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 13px;
+      margin-bottom: 0;
+      transition: background 0.27s, color 0.22s;
+      box-shadow: 0 2px 12px 0 #191e2e44;
+      letter-spacing: .03em;
+    }
+    button:hover {
+      background: linear-gradient(90deg, var(--accent2) 10%, var(--accent) 100%);
+      color: #1a1a1a;
+    }
+    .painel-results {
+      flex: 2.1 1 0;
+      max-width: 570px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+    .result-block {
+      background: #23253a;
+      border-radius: 9px;
+      padding: 16px 15px 14px 15px;
+      box-sizing: border-box;
+      box-shadow: 0 2px 12px 0 #181e2e33;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+    .result-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #ffd54f;
+      font-size: 1.08em;
+      letter-spacing: .5px;
+    }
+    .result-title.idmsg { color: var(--accent);}
+    .result-title.msg-long { color: #ff7979;}
+    .result-content {
+      background: #171a22;
+      color: #fffde7;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      border-radius: 6px;
+      padding: 13px 15px;
+      font-size: 1.06em;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 0;
+      min-height: 52px;
+      max-height: none;
+      overflow: visible;
+      width: 100%;
+    }
+    .copy-btn {
+      width: 100%;
+      margin: 10px 0 0 0;
+      padding: 11px 0;
+      font-size: 1em;
+      border-radius: 7px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background .17s;
+    }
+    .copy-btn:hover {
+      background: var(--accent2);
+      color: #222;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 35px;
+      font-size: 0.95em;
+      color: #aaa;
+      width: 100vw;
+    }
+    .footer img {
+      margin-top: 10px;
+    }
+    a {
+      color: #5dade2;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+		<a href="/cpxxp/index.html">🏠 Início</a>
+        <a href="/cpxxp/entrevista/index.html">🎤 Entrevista</a>
+        <a href="/cpxxp/punicoes_trabalho/index.html">🛠️ Punições Trabalho</a>
+        <a href="/cpxxp/punicoes_nome/index.html">❌ Punições Nome</a>
+        <a href="/cpxxp/verificar_perfil/index.html">🔍 Verificar Perfil</a>
+        <a href="/cpxxp/reuniao_nome/index.html">📅 Marcar Troca de Nome</a>
+        <a href="/cpxxp/modelos_suporte/index.html">🔄 Modelos Suporte</a>
+  </nav>
+<main>
+  <div class="card">
+    <form class="painel-form" autocomplete="off" onsubmit="event.preventDefault(); generateReport();">
+      <h1>Punição Nome Inadequado</h1>
+      <div class="desc">
+        Gere e copie rapidamente o relatório de remoção de Allowlist por nome inadequado.<br>
+        <span style="color:var(--accent2);font-weight:600;">Preencha os campos</span> e use os botões de copiar!
+      </div>
+      <label for="discordId">ID Discord:</label>
+      <input type="text" id="discordId" name="discordId" placeholder="Ex: 123456789012345678">
+      <label for="characterId">ID do Personagem:</label>
+      <input type="text" id="characterId" name="characterId" placeholder="Ex: 9876">
+      <label for="characterName">Nome do Personagem:</label>
+      <input type="text" id="characterName" name="characterName" placeholder="Ex: João Silva">
+      <button type="submit">Gerar Relatório</button>
+    </form>
+    <section class="painel-results">
+      <div class="result-block">
+        <div class="result-title">Informações da Punição</div>
+        <div class="result-content" id="infoBlock"></div>
+        <button class="copy-btn" onclick="copyContent('infoBlock')">Copiar Info</button>
+      </div>
+      <div class="result-block">
+        <div class="result-title idmsg">Mensagem (ID Discord)</div>
+        <div class="result-content" id="idMsgBlock"></div>
+        <button class="copy-btn" onclick="copyContent('idMsgBlock')">Copiar ID Discord</button>
+      </div>
+      <div class="result-block">
+        <div class="result-title msg-long">Mensagem para Enviar</div>
+        <div class="result-content" id="msgBlock"></div>
+        <button class="copy-btn" onclick="copyContent('msgBlock')">Copiar Mensagem</button>
+      </div>
+    </section>
+  </div>
+</main>
+  <div class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Imagem" width="150">
+    <p>© 2025 - Todos os direitos reservados. Feito com ❤, ajuda de IA e um pouquinho de preguiça por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a>!</p>
+  </div>
+  <script>
+    // Função para obter a saudação baseada na hora atual
+    function getSaudacao() {
+      const hora = new Date().getHours();
+      if (hora >= 5 && hora < 12) {
+        return "Bom dia";
+      } else if (hora >= 12 && hora < 18) {
+        return "Boa tarde";
+      } else {
+        return "Boa noite";
+      }
+    }
+
+    function generateReport() {
+      const discordId = document.getElementById('discordId').value.trim();
+      const characterId = document.getElementById('characterId').value.trim();
+      const characterName = document.getElementById('characterName').value.trim();
+
+      if (!discordId || !characterId || !characterName) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      const saudacao = getSaudacao(); // Pega a saudação dinâmica
+
+      // Info block - Ajustado para o novo formato
+      let info = `**ID Discord:** ${discordId} | <@${discordId}>\n**ID e Nome do Personagem:** ${characterId} - ${characterName}\n**Motivo:** Nome inadequado\n**Punição:** Remoção de AL`;
+
+      // Mensagem ID Discord (mantido como o formato anterior que você aprovou para este bloco)
+      let idmsg = `${discordId} | <@${discordId}> - ${characterId} - ${characterName} - Remoção de AL - Nome inadequado.`;
+
+      // Mensagem block (longa)
+      let msg = `${saudacao}! Sua Allowlist está sendo removida pelo seguinte motivo: (Nome inadequado). Durante o alinhamento, é informado que o nome deve ser registrável em cartório. Nomes com duplo sentido, apelidos, diminutivos (como Joãozinho, Paulinha), nomes inventados ou com símbolos, repetições de letras ou números fora do padrão não são permitidos. Exemplo de um nome correto com as iniciais maiúsculas (ex: João Silva). Lembrando que o nome deve conter UM nome e até TRÊS sobrenomes. Caso deseje retornar ao servidor, será necessário refazer o processo de Allowlist com um nome válido.Atenciosamente, Equipe de Allowlist – Suporte CPX.XP!`;
+
+      document.getElementById("infoBlock").textContent = info;
+      document.getElementById("idMsgBlock").textContent = idmsg;
+      document.getElementById("msgBlock").textContent = msg;
+    }
+
+    function copyContent(id) {
+      const texto = document.getElementById(id).textContent;
+      const temp = document.createElement('textarea');
+      temp.value = texto;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      alert('Copiado!');
+    }
+  </script>
+</body>
+</html>

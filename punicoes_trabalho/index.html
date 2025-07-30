@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Punição Serviços - Complexo XP</title>
+  <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cor-bg: #10131b;
+      --cor-card: #181d27;
+      --cor-prim: #4f8cff;
+      --cor-sec: #ffd54f;
+      --cor-sucesso: #4caf50;
+      --cor-erro: #ff4b4b;
+      --cor-label: #b8b8b8;
+      --cor-titulo: #90caf9;
+      --cor-destaque: #fffde7;
+      --cor-texto: #e0e0e0;
+      --cor-input: #222733;
+      --radius: 15px;
+      --shadow: 0 4px 24px 0 rgba(0,0,0,0.19);
+      --trans: 0.22s cubic-bezier(.4,0,.2,1);
+    }
+    html, body {
+      background: var(--cor-bg);
+      color: var(--cor-texto);
+      font-family: 'Inter', Arial, sans-serif;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    nav {
+      background: #1f1f1f;
+      padding: 10px 0 10px 0;
+      text-align: center;
+      width: 100vw;
+      min-width: 320px;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px #1118;
+      font-size: 1.09em;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 13px;
+      font-weight: 600;
+      border-radius: 7px;
+      padding: 6px 11px;
+      transition: background .17s, color .17s;
+      display: inline-block;
+    }
+    nav a:hover {
+      background: var(--cor-prim);
+      color: #fffde7;
+    }
+    main {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .card {
+      background: var(--cor-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px 36px 26px 36px;
+      width: 1100px;
+      max-width: 100vw;
+      margin: 32px 0;
+      display: flex;
+      gap: 32px;
+    }
+    @media (max-width: 1200px) {
+      .card { width: 98vw; }
+    }
+    @media (max-width: 1000px) {
+      .card { flex-direction: column; width: 99vw; padding: 22px 6px 18px 6px; gap: 13px; }
+    }
+    .painel-form {
+      flex: 1 1 0;
+      min-width: 310px;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7em;
+      justify-content: flex-start;
+    }
+    .painel-form h1 {
+      color: var(--cor-titulo);
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 4px;
+      margin-top: 0;
+      letter-spacing: -0.5px;
+      text-align: left;
+    }
+    .painel-form .desc {
+      color: var(--cor-label);
+      margin-bottom: 16px;
+      font-size: 1.02em;
+      padding-left: 2px;
+    }
+    label {
+      font-weight: 700;
+      color: var(--cor-label);
+      letter-spacing: 0.02em;
+      margin-bottom: 3px; /* Espaço para o campo, caso não esteja em input-group */
+      margin-top: 9px; /* Espaço acima da label */
+      display: block; /* Garante que a label ocupe sua própria linha por padrão */
+      font-size: 1em;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 18px;
+      border-radius: 7px;
+      border: 2px solid #26314b;
+      background: var(--cor-input);
+      color: var(--cor-texto);
+      font-size: 1.05em;
+      margin-bottom: 4px; /* Espaço para o próximo elemento */
+      margin-top: 0;
+      font-family: inherit;
+      transition: border var(--trans), box-shadow var(--trans);
+      box-sizing: border-box; /* Garante que o padding seja incluído na largura total */
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--cor-prim);
+      box-shadow: 0 0 0 2px #4f8cff44;
+      background: #232a3a;
+    }
+    select { cursor: pointer; }
+    textarea {
+      min-height: 90px;
+      max-height: 200px;
+      resize: vertical;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 1.02em;
+      margin-bottom: 0;
+    }
+    /* Estilo para agrupar label e input lado a lado */
+    .input-group {
+      display: flex; /* Usa flexbox para alinhar itens */
+      align-items: center; /* Alinha verticalmente no centro */
+      gap: 10px; /* Espaço entre a label e o input */
+      margin-top: 9px; /* Mantém o espaçamento superior */
+      margin-bottom: 4px; /* Mantém o espaçamento inferior */
+    }
+    .input-group label {
+      flex-shrink: 0; /* Impede a label de encolher */
+      margin: 0; /* Remove margens padrão da label dentro do grupo */
+      white-space: nowrap; /* Evita quebra de linha no texto da label */
+      width: 170px; /* AJUSTADO AQUI: Mais largura para a label */
+      text-align: right; /* Alinha o texto da label à direita */
+      display: flex; /* Adiciona flexbox à label para alinhar seu texto e o tooltip */
+      align-items: center; /* Alinha verticalmente o texto e o tooltip */
+      justify-content: flex-end; /* Alinha o conteúdo da label à direita */
+      gap: 5px; /* Espaçamento entre o texto da label e o tooltip */
+    }
+    .input-group input {
+      flex-grow: 1; /* Permite que o input ocupe o espaço restante */
+      margin: 0; /* Remove margens padrão do input dentro do grupo */
+      max-width: calc(100% - 185px); /* AJUSTADO AQUI: 170px (label) + 15px (gap, para dar um pouco mais de folga) */
+    }
+    /* Mídia query para telas menores: volta a empilhar os campos */
+    @media (max-width: 650px) {
+        .input-group {
+            flex-direction: column; /* Empilha label e input */
+            align-items: flex-start; /* Alinha à esquerda */
+            gap: 0; /* Remove o gap entre label e input */
+        }
+        .input-group label {
+            width: auto; /* Volta a largura automática */
+            text-align: left; /* Volta a alinhar à esquerda */
+            margin-bottom: 3px; /* Adiciona um pequeno espaço abaixo da label */
+            justify-content: flex-start; /* Alinha o conteúdo da label à esquerda */
+        }
+        .input-group input {
+            max-width: 100%; /* Ocupa 100% da largura disponível */
+            width: 100%; /* Garante 100% de largura */
+            margin-bottom: 8px; /* Espaço para o próximo grupo/elemento */
+        }
+    }
+
+    .inline-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    .inline-group label {
+      margin: 0 0 0 0;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    .painel-form button {
+      margin-top: 18px;
+      padding: 13px 0;
+      font-size: 1.15em;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(90deg, var(--cor-prim) 60%, var(--cor-sec) 100%);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px 0 #191e2e77;
+      transition: background var(--trans), box-shadow var(--trans);
+      text-shadow: 0 1px 1px #1119;
+      letter-spacing: 0.03em;
+    }
+    .painel-form button:hover {
+      background: linear-gradient(90deg, var(--cor-sec) 10%, var(--cor-prim) 100%);
+      box-shadow: 0 4px 16px 0 #1a253d99;
+      color: #252525;
+    }
+    .hidden { display: none; }
+    .painel-preview {
+      flex: 1.4 1 0;
+      min-width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      align-items: stretch;
+    }
+    .painel-preview h2 {
+      color: var(--cor-sec);
+      font-size: 1.18em;
+      margin-bottom: 11px;
+      margin-top: 0;
+      letter-spacing: 0.01em;
+      font-weight: 800;
+    }
+    .resultado-label {
+      font-weight:bold;
+      margin-bottom:6px;
+      margin-top:22px;
+      font-size:1.12em;
+      text-shadow:0 1px 0 #1113;
+    }
+    .resultado-label.info { color:var(--cor-sec);}
+    .resultado-label.msg { color:var(--cor-prim);}
+    .resultado-wrap {
+      background: #171a22;
+      color: #fffde7;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      font-size: 1.1em;
+      padding: 20px 18px 20px 18px;
+      border-radius: 8px;
+      border: 2px solid #2b354f;
+      box-sizing: border-box;
+      margin-bottom: 0;
+      margin-top: 0;
+      min-height: 120px;
+      max-height: none;
+      overflow: visible;
+      white-space: pre-wrap;
+      word-break: break-word;
+      transition: background .14s;
+      width: 100%;
+    }
+    .painel-preview .botao-copiar {
+      margin: 8px 0 12px 0;
+      width: 100%;
+      padding: 12px 0;
+      font-size: 1.04em;
+      border-radius: 7px;
+      background: var(--cor-prim);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      box-shadow: 0 2px 12px 0 #181e2e40;
+      cursor: pointer;
+      transition: background var(--trans);
+    }
+    .painel-preview .botao-copiar:hover {
+      background: var(--cor-sec);
+      color: #222;
+    }
+    .painel-preview .botao-limpar {
+      margin: 8px 0 0 0;
+      width: 100%;
+      padding: 10px 0;
+      font-size: 1em;
+      border-radius: 7px;
+      background: #353c4e;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background var(--trans);
+    }
+    .painel-preview .botao-limpar:hover {
+      background: var(--cor-erro);
+      color: #fff;
+    }
+    .tooltip {
+      position: relative;
+      cursor: pointer;
+      /* Ajustes para a tooltip */
+      display: inline-flex; /* Para que o ícone 'ⓘ' e seu texto fiquem juntos */
+      align-items: center; /* Alinha verticalmente */
+      margin-left: 5px; /* Espaço entre o texto da label e o ícone */
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 210px;
+      background-color: #262c3e;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 8px 13px;
+      position: absolute;
+      z-index: 2;
+      bottom: 110%;
+      left: 50%;
+      margin-left: -105px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.98em;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 14px;
+      color: #888;
+      width: 100%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .footer a {
+      color: #4fc3f7;
+      text-decoration: none;
+    }
+    .footer img {
+      margin-top: 10px;
+      border-radius: 50%;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;}
+    input[type=number] { -moz-appearance: textfield; }
+    @media (max-width: 900px) {
+      .resultado-wrap { min-height: 90px; }
+    }
+    /* Mantém as colunas para telas médias e grandes */
+    @media (min-width: 651px) and (max-width: 1000px) {
+        .card {
+            flex-direction: column;
+            width: 99vw;
+            padding: 22px 6px 18px 6px;
+            gap: 13px;
+        }
+        .painel-form, .painel-preview {
+            min-width: 0;
+            max-width: 100%; /* Para preencher a largura na coluna */
+        }
+        /* Ajuste específico para input-group em telas médias para evitar quebra */
+        .input-group {
+            flex-wrap: wrap; /* Permite quebrar se o espaço for muito pequeno, mas tenta manter em linha */
+            justify-content: flex-start; /* Alinha ao início */
+        }
+        .input-group label {
+            width: 100%; /* Ocupa a largura total para a label em telas menores, forçando a quebra */
+            text-align: left;
+        }
+        .input-group input {
+            max-width: 100%; /* Ocupa o restante do espaço */
+        }
+    }
+    /* Estilos para telas muito pequenas, onde tudo vira coluna */
+    @media (max-width: 650px) {
+      .card { flex-direction: column; padding: 12px 2vw; }
+      .painel-form, .painel-preview { min-width: 0; }
+      .resultado-wrap { min-height: 70px; font-size:0.97em;}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+		<a href="/cpxxp/index.html">🏠 Início</a>
+        <a href="/cpxxp/entrevista/index.html">🎤 Entrevista</a>
+        <a href="/cpxxp/punicoes_trabalho/index.html">🛠️ Punições Trabalho</a>
+        <a href="/cpxxp/punicoes_nome/index.html">❌ Punições Nome</a>
+        <a href="/cpxxp/verificar_perfil/index.html">🔍 Verificar Perfil</a>
+        <a href="/cpxxp/reuniao_nome/index.html">📅 Marcar Troca de Nome</a>
+        <a href="/cpxxp/modelos_suporte/index.html">🔄 Modelos Suporte</a>
+  </nav>
+<main>
+  <div class="card">
+    <form class="painel-form" autocomplete="off" onsubmit="event.preventDefault(); gerarRelatorio();">
+      <h1>Punições Serviços XP</h1>
+      <div class="desc">
+        Gere relatórios de advertências para profissões do servidor. <span style="color:var(--cor-sec);font-weight:600;">Preencha os campos</span> ao lado e veja o texto pronto ao lado direito!
+      </div>
+      <div class="input-group">
+        <label for="nomePersonagem">Nome do Personagem <span class="tooltip">ⓘ<span class="tooltiptext">Nome completo do personagem no jogo.</span></span></label>
+        <input type="text" id="nomePersonagem" placeholder="Ex: John Doe" autocomplete="off" maxlength="50" />
+      </div>
+      <div class="input-group">
+        <label for="id">ID do personagem <span class="tooltip">ⓘ<span class="tooltiptext">ID numérico do personagem no jogo.</span></span></label>
+        <input type="text" id="id" placeholder="Ex: 123" autocomplete="off" maxlength="12" />
+      </div>
+      <div class="input-group">
+        <label for="idDiscord">ID Discord <span class="tooltip">ⓘ<span class="tooltiptext">ID numérico do Discord. Use o botão direito no Discord > Copiar ID.</span></span></label>
+        <input type="text" id="idDiscord" placeholder="Ex: 987654321" autocomplete="off" maxlength="24" />
+      </div>
+      <label for="profissao">Profissão <span class="tooltip">ⓘ<span class="tooltiptext">Selecione a profissão do personagem que será advertido.</span></span></label>
+      <select id="profissao" onchange="mostrarOpcoesAdicionais()">
+        <option value="Faxineiro">Faxineiro</option>
+        <option value="Lenhador">Lenhador</option>
+        <option value="Minerador">Minerador</option>
+        <option value="Motoboy">Motoboy</option>
+        <option value="Lixeiro">Lixeiro</option>
+        <option value="Caçador">Caçador</option>
+      </select>
+      <div id="opcoesLixeiro" class="hidden">
+        <label for="opcaoLixeiro">Tipo de advertência <span class="tooltip">ⓘ<span class="tooltiptext">Em Lixeiro, especifique se o problema foi com roupa, veículo ou ambos.</span></span></label>
+        <select id="opcaoLixeiro" onchange="atualizarAdvertencia()">
+          <option value="Roupa">Roupa</option>
+          <option value="Veiculo">Veículo</option>
+          <option value="RoupaVeiculo">Roupa e Veículo</option>
+        </select>
+      </div>
+      <div id="opcoesCacador" class="hidden">
+        <label for="opcaoCacador">Tipo de advertência <span class="tooltip">ⓘ<span class="tooltiptext">No Caçador, escolha se o problema foi roupa, arma ou ambos.</span></span></label>
+        <select id="opcaoCacador" onchange="atualizarAdvertencia()">
+          <option value="Roupa">Roupa</option>
+          <option value="Arma">Arma</option>
+          <option value="RoupaArma">Roupa e Arma</option>
+        </select>
+      </div>
+      <label for="tipoAdvertencia">Tipo de Advertência <span class="tooltip">ⓘ<span class="tooltiptext">Advertência 1: primeira punição.<br>Advertência 2: reincidência, exige reunião.</span></span></label>
+      <select id="tipoAdvertencia" onchange="mostrarCamposTipo2(); atualizarAdvertencia();">
+        <option value="1">Advertência 1</option>
+        <option value="2">Advertência 2 (Reunião)</option>
+      </select>
+      <div id="dadosAdvertencia2" class="hidden" style="margin-bottom: 2px;">
+        <div class="inline-group">
+          <label for="tratamento">"O" ou "A"</label>
+          <select id="tratamento" onchange="atualizarAdvertencia()">
+            <option value="o">O</option>
+            <option value="a">A</option>
+          </select>
+          <label for="nomeStaff">Staff</label>
+          <input type="text" id="nomeStaff" placeholder="Nome da Staff" style="max-width:180px;" />
+        </div>
+        <div class="inline-group">
+          <label for="data1">Data 1</label>
+          <input type="text" id="data1" placeholder="ex: 0705 ou 07/05" maxlength="10" style="max-width:110px;" />
+          <label for="data2">Data 2</label>
+          <input type="text" id="data2" placeholder="ex: 0805 ou 08/05" maxlength="10" style="max-width:110px;" />
+        </div>
+      </div>
+      <button type="submit" style="margin-top:18px;">Gerar Relatório</button>
+    </form>
+    <section class="painel-preview">
+      <h2>Relatório Pronto</h2>
+
+      <div class="resultado-label info">Informações da Advertência</div>
+      <pre class="resultado-wrap" id="info"></pre>
+      <button type="button" class="botao-copiar" onclick="copiarInfo()">Copiar Info</button>
+
+      <div class="resultado-label msg">Mensagem para Enviar</div>
+      <pre class="resultado-wrap" id="mensagem"></pre>
+      <button type="button" class="botao-copiar" onclick="copiarMensagem()">Copiar Mensagem</button>
+
+      <button type="button" class="botao-limpar" onclick="limparCampos()">Limpar Tudo</button>
+      <div style="font-size:.98em;color:#b8b8b8; margin-top:7px;">
+        <span>Preencha todos os campos ao lado esquerdo.<br>
+        Clique nos botões <b>Copiar</b> para copiar cada parte.<br>
+        <span style="color:var(--cor-sec)">Dica:</span> Cole cada trecho direto no Discord conforme necessário!</span>
+      </div>
+    </section>
+  </div>
+</main>
+
+  <div class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky Confuso" width="90" />
+    <p>2025 - Feito com ❤, ajuda de IA e um pouquinho de preguiça por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a>!</p>
+  </div>
+  <script>
+    function getSaudacao() {
+      const hora = new Date().getHours();
+      if (hora >= 5 && hora < 12) {
+        return "Bom dia";
+      } else if (hora >= 12 && hora < 18) {
+        return "Boa tarde";
+      } else {
+        return "Boa noite";
+      }
+    }
+
+    function mostrarOpcoesAdicionais() {
+      const prof = document.getElementById('profissao').value;
+      document.getElementById('opcoesLixeiro').classList.toggle('hidden', prof !== 'Lixeiro');
+      document.getElementById('opcoesCacador').classList.toggle('hidden', prof !== 'Caçador');
+      atualizarAdvertencia();
+    }
+
+    function mostrarCamposTipo2() {
+      const tipo = document.getElementById('tipoAdvertencia').value;
+      document.getElementById('dadosAdvertencia2').classList.toggle('hidden', tipo !== '2');
+    }
+
+    function atualizarAdvertencia() {
+      const prof = document.getElementById('profissao').value;
+      let motivo = 'Roupa inadequada';
+      if (prof === 'Lixeiro') {
+        const op = document.getElementById('opcaoLixeiro').value;
+        if (op === 'Veiculo') motivo = 'Veículo inadequado';
+        else if (op === 'RoupaVeiculo') motivo = 'Roupa e veículo inadequados';
+      }
+      if (prof === 'Caçador') {
+        const op = document.getElementById('opcaoCacador').value;
+        if (op === 'Arma') motivo = 'Arma inadequada';
+        else if (op === 'RoupaArma') motivo = 'Roupa e arma inadequadas';
+      }
+      document.getElementById('info').setAttribute('data-motivoResumo', motivo);
+    }
+
+    function copiarPre(id) {
+      const texto = document.getElementById(id).innerText;
+      const tempTextarea = document.createElement('textarea');
+      tempTextarea.value = texto;
+      document.body.appendChild(tempTextarea);
+      tempTextarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempTextarea);
+      alert('Copiado!');
+    }
+
+    function copiarInfo() {
+      copiarPre('info');
+    }
+
+    function copiarMensagem() {
+      copiarPre('mensagem');
+    }
+
+    function limparCampos() {
+      document.getElementById('nomePersonagem').value = '';
+      document.getElementById('id').value = '';
+      document.getElementById('idDiscord').value = '';
+      document.getElementById('profissao').selectedIndex = 0;
+      document.getElementById('tipoAdvertencia').selectedIndex = 0;
+      document.getElementById('opcaoLixeiro').selectedIndex = 0;
+      document.getElementById('opcoesLixeiro').classList.add('hidden');
+      document.getElementById('opcaoCacador').selectedIndex = 0;
+      document.getElementById('opcoesCacador').classList.add('hidden');
+      document.getElementById('nomeStaff').value = '';
+      document.getElementById('tratamento').selectedIndex = 0;
+      document.getElementById('data1').value = '';
+      document.getElementById('data2').value = '';
+      document.getElementById('info').innerText = '';
+      document.getElementById('mensagem').innerText = '';
+      document.getElementById('dadosAdvertencia2').classList.add('hidden');
+    }
+
+    function gerarRelatorio() {
+      const nomePersonagem = document.getElementById('nomePersonagem').value;
+      const id = document.getElementById('id').value;
+      const discord = document.getElementById('idDiscord').value;
+      const prof = document.getElementById('profissao').value;
+      const tipo = document.getElementById('tipoAdvertencia').value;
+      const motivo = document.getElementById('info').getAttribute('data-motivoResumo') || 'Roupa inadequada';
+      const nomeStaff = document.getElementById('nomeStaff').value;
+      const tratamento = document.getElementById('tratamento').value;
+      const data1Input = document.getElementById('data1').value;
+      const data2Input = document.getElementById('data2').value;
+      const saudacao = getSaudacao(); // Pega a saudação dinâmica
+
+      const detalhes = {
+        Faxineiro: '(Faxineiro: calça, sapatos, camiseta e cinto com ferramentas).',
+        Lenhador: '(Lenhador: luvas, sapatos, camiseta e calça).',
+        Minerador: '(Minerador: luvas, sapatos, colete refletivo, capacete de segurança, calças e camiseta).',
+        Motoboy: '(Motoboy: colete de mototaxi, sapatos, bolsa de entregador, jaqueta e capacete).',
+        Lixeiro: {
+          Roupa: '(Lixeiro: sapato, luvas, colete refletivo, camiseta e calça).',
+          Veiculo: '(Lixeiro: caminhão trash).',
+          RoupaVeiculo: '(Lixeiro: sapato, luvas, colete refletivo, camiseta, calça e caminhão trash).'
+        },
+        Caçador: {
+          Roupa: '(Caçador: roupas fechadas (calças e camisas manga longa), luvas e sapatos).',
+          Arma: '(Caçador: rifle de caça).',
+          RoupaArma: '(Caçador: roupas fechadas (calças e camisas manga longa), luvas, sapatos e rifle de caça).'
+        }
+      };
+
+      let detalhe = detalhes[prof];
+      if (typeof detalhe === 'object') {
+        detalhe = detalhes[prof === 'Lixeiro' ? document.getElementById('opcaoLixeiro').value : document.getElementById('opcaoCacador').value];
+      }
+
+      // Info - MANTER O MOTIVO AQUI
+      let info = `**ID:** ${id}${nomePersonagem ? ' - ' + nomePersonagem : ''}\n` +
+                 `**ID Discord:** ${discord} | <@${discord}>\n` +
+                 `**Profissão:** ${prof}\n`;
+
+      if (tipo === '1') {
+          info += `**Motivo da Advertência:** ${motivo} para realizar o trabalho de ${prof.toLowerCase()}\n` +
+                  `**Status:** Advertência 1\n`;
+      } else { // tipo === '2'
+          info += `**Motivo da Advertência:** ${motivo} para realizar o trabalho de ${prof.toLowerCase()}\n` + // Revertido para incluir o motivo
+                  `**Status:** Advertência 2\n`;
+      }
+      info += `**Provas:**`;
+
+
+      // Mensagem - REMOVER O MOTIVO APENAS AQUI PARA O TIPO 2
+      let mensagem = "";
+      if (tipo === '1') {
+        if (prof === 'Lixeiro') {
+          if (document.getElementById('opcaoLixeiro').value === 'Roupa') {
+            mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme de trabalho. Lembre-se de que é essencial utilizar a vestimenta correta para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Lixeiro.Roupa}`;
+          } else if (document.getElementById('opcaoLixeiro').value === 'Veiculo') {
+            mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do veículo de trabalho. Lembre-se de que é essencial utilizar o veículo correto para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Lixeiro.Veiculo}`;
+          } else if (document.getElementById('opcaoLixeiro').value === 'RoupaVeiculo') {
+            mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme e do veículo de trabalho. Lembre-se de que é essencial utilizar tanto a vestimenta quanto o veículo corretos para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Lixeiro.RoupaVeiculo}`;
+          }
+        } else if (prof === 'Caçador') {
+          if (document.getElementById('opcaoCacador').value === 'Roupa') {
+            mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme de trabalho. Lembre-se de que é essencial utilizar a vestimenta correta para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Caçador.Roupa}`;
+          } else if (document.getElementById('opcaoCacador').value === 'Arma') {
+            mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do equipamento de trabalho. Lembre-se de que é essencial utilizar o equipamento correto para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Caçador.Arma}`;
+          } else if (document.getElementById('opcaoCacador').value === 'RoupaArma') {
+            mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme e do equipamento de trabalho. Lembre-se de que é essencial utilizar tanto a vestimenta quanto o equipamento corretos para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Caçador.RoupaArma}`;
+          }
+        } else if (prof === 'Faxineiro') {
+          mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme de trabalho. Lembre-se de que é essencial utilizar a vestimenta correta para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Faxineiro}`;
+        } else if (prof === 'Lenhador') {
+          mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme de trabalho. Lembre-se de que é essencial utilizar a vestimenta correta para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Lenhador}`;
+        } else if (prof === 'Minerador') {
+          mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme de trabalho. Lembre-se de que é essencial utilizar a vestimenta correta para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Minerador}`;
+        } else if (prof === 'Motoboy') {
+          mensagem = `${saudacao}. Estamos registrando uma advertência pelo uso inadequado do uniforme de trabalho. Lembre-se de que é essencial utilizar a vestimenta correta para o serviço que está sendo realizado. Em caso de reincidência, uma punição entrará em vigor. ${detalhes.Motoboy}`;
+        }
+      } else {
+        const dataTexto = montarTextoData(data1Input, data2Input);
+        // AQUI ESTÁ A MUDANÇA SOLICITADA: REMOVIDO O MOTIVO DA MENSAGEM DA ADVERTÊNCIA 2.
+        mensagem = `${saudacao}, você está sendo convidado/a a participar de uma reunião com a Equipe de Suporte. Procure ${tratamento} ${nomeStaff}, para agendar um horário no PRIVADO, ${dataTexto}.`;
+      }
+      document.getElementById('info').setAttribute('data-motivoResumo', motivo);
+      document.getElementById('info').innerText = info;
+      document.getElementById('mensagem').innerText = mensagem;
+    }
+
+    function normalizarDataBr(str) {
+      const soNumeros = str.replace(/[^\d]/g, '');
+      const hoje = new Date();
+      const anoAtual = hoje.getFullYear();
+
+      if (soNumeros.length === 4) {
+        return new Date(`${anoAtual}-${soNumeros.slice(2, 4)}-${soNumeros.slice(0, 2)}T00:00:00`);
+      }
+      if (soNumeros.length === 8) {
+        return new Date(`${soNumeros.slice(4, 8)}-${soNumeros.slice(2, 4)}-${soNumeros.slice(0, 2)}T00:00:00`);
+      }
+      return null;
+    }
+
+    function montarTextoData(d1, d2) {
+      const hoje = new Date();
+      const amanha = new Date();
+      amanha.setDate(hoje.getDate() + 1);
+
+      const data1 = normalizarDataBr(d1);
+      const data2 = normalizarDataBr(d2);
+
+      const f1 = data1?.toLocaleDateString('pt-BR');
+      const f2 = data2?.toLocaleDateString('pt-BR');
+
+      if (!data1 || isNaN(data1)) return 'data inválida';
+
+      let texto = '';
+      const hojeF = hoje.toLocaleDateString('pt-BR');
+      const amanhaF = amanha.toLocaleDateString('pt-BR');
+
+      if (f1 === hojeF) texto += `na data de hoje (${f1})`;
+      else if (f1 === amanhaF) texto += `na data de amanhã (${f1})`;
+      else texto += `na data de (${f1})`;
+
+      if (data2 && !isNaN(data2)) {
+        if (f2 === amanhaF) texto += ` ou amanhã (${f2})`;
+        else texto += ` ou (${f2})`;
+      }
+      return texto;
+    }
+
+    // Initialize on page load
+    mostrarOpcoesAdicionais();
+  </script>
+</body>
+</html>
